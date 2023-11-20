@@ -1,16 +1,31 @@
 #include<stdio.h>
-#include<string.h>
+#include<stdlib.h>
 int main()
 {
-    int i,wcount=0; // variable declaration//
-    char str[1000]; // variable declaration//
-    printf("Enter the text: "); //user instruction//
-    gets(str); //getting text input from user//
-    for(i=0;str[i]!='\0';i++) //loop for handling text elements//
+    FILE *ptr; //file pointer variable declaration//
+    int wrd=0,characters=0;//variable declaration//
+    char ch;//variable declaration//
+    char path[100];//variable declaration//
+    printf("Enter source file path: "); //User instruction//
+    scanf("%s", path); //Getting file path input from user//
+
+    ptr = fopen(path,"r");//opening file in read mode//
+
+    while((ch = fgetc(ptr)) != EOF)//loop for handling file characters//
     {
-        if (str[i]==' '&&str[i+1]!=' ') //condition for word count//
-            wcount++; //word counter//
+        characters++; //character counter//
+        if (ch == ' ' || ch == '\t' || ch == '\n' || ch == '\0') //condition for word count//
+            wrd++; //word counter//
     }
-    printf("Number of words = %d",wcount+1); //printing word count/user information//
+     if (characters > 0) //last word counting condition//
+    {
+        wrd++;
+    }
+    printf("\n"); //going to next line//
+    printf("Total characters = %d\n", characters); //user information//
+    printf("Total words      = %d\n", wrd); //user information//
+
+
+    fclose(ptr); //closing the file handling function//
     return 0;
 }
